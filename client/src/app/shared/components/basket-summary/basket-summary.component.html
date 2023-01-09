@@ -36,10 +36,10 @@
                                     class="text-muted font-weight-normal font-italic d-block">Type:
                                     {{item.type}}</span>
                             </div>
-    
+
                         </div>
                     </th>
-                    <td class="align-middle"><strong>{{item.price | currency}}</strong></td>
+                    <td class="align-middle"><strong>{{item.price | currency:'Rs '}}</strong></td>
                     <td class="align-middle">
                         <div class="d-flex align-items-center" [class.justify-content-center]="!isBasket">
                             <i *ngIf="isBasket" (click)="decrementItemQuantity(item)" class="fa fa-minus-circle text-warning mr-2"
@@ -52,7 +52,7 @@
                         </div>
                     </td>
                     <td class="align-middle">
-                        <strong>{{item.price * item.quantity | currency}}</strong></td>
+                        <strong>{{item.price * item.quantity | currency:'Rs '}}</strong></td>
                     <td class="align-middle text-center">
                         <a class="text-danger">
                             <i *ngIf="isBasket" (click)="removeBasketItem(item)" class="fa fa-trash" style="font-size: 2em; cursor: pointer;"></i>
@@ -62,5 +62,5 @@
             </tbody>
         </table>
     </div>
-    
+
 </ng-container>

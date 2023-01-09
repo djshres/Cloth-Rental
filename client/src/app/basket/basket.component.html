@@ -3,7 +3,7 @@
         <p>There are no items in your basket</p>
     </div>
 
-    <div *ngIf="basket$ | async">
+    <div *ngIf="basket$| async">
         <div class="pb-5">
             <div class="container">
                 <div class="row">
@@ -16,7 +16,7 @@
                         ></app-basket-summary>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-6 offset-6">
                         <app-order-totals

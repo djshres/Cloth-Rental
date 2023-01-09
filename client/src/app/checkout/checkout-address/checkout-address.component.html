@@ -1,8 +1,8 @@
 <div class="mt-4" [formGroup]="checkoutForm">
     <div class="d-flex justify-content-between align-items-center">
         <h4>Shipping address</h4>
-        <button 
-            (click)="saveUserAddress()" 
+        <button
+            (click)="saveUserAddress()"
             class="btn btn-outline-success mb-3"
             [disabled]="!checkoutForm.get('addressForm').valid || !checkoutForm.get('addressForm').dirty"
         >
@@ -26,7 +26,7 @@
             <app-text-input [label]="'State'" formControlName="state"></app-text-input>
         </div>
         <div class="form-group col-6">
-            <app-text-input [label]="'Zip code'" formControlName="zipCode"></app-text-input>
+            <app-text-input [label]="'Contact'" formControlName="zipCode"></app-text-input>
         </div>
     </div>
 </div>

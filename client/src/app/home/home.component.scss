@@ -1,9 +1,18 @@
 .featured {
-    height: 250px;
+    height: 100px;
+    background-color:whitesmoke;
+    font-style: oblique;
+    h1{
+      color:black
+    }
 }
 
 img {
     object-fit: cover;
-    height: 600px;
+    height: 550px;
     width: 100%;
+}
+h2{
+  font-style: italic;
+  color: black;
 }
