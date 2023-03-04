@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
@@ -44,6 +45,13 @@ namespace Infrastructure.Data
         public async Task<IReadOnlyList<T>> ListAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
+        }
+
+        public async Task<IReadOnlyList<ProductReview>> ListAllAsync(int id)
+        {
+            //return await _context.ProductReviews.Where(x => x.ProductId);
+            string sql = $"SELECT * FROM ProductReviews WHERE ProductId = {id}";
+            return await _context.Set<ProductReview>().FromSqlRaw(sql).ToListAsync();
         }
 
         public async Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec)

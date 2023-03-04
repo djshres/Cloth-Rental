@@ -8,6 +8,7 @@ import { ShopParams } from '../shared/models/shopParams';
 import { IProduct } from '../shared/models/product';
 import { of } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ProductReview } from '../shared/models/review';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class ShopService {
   baseUrl = environment.apiUrl;
   products: IProduct[] = [];
   brands: IBrand[] = [];
+  productReviews: ProductReview[] = [];
   types: IType[] = [];
   pagination = new Pagination();
   shopParams = new ShopParams();
@@ -107,5 +109,27 @@ export class ShopService {
         return response;
       })
     )
+  }
+
+  getProductReviews(id: number) {
+    return this.http.get<ProductReview[]>(this.baseUrl + 'products/reviews/'+id).pipe(
+      map(response => {
+        this.productReviews= response;
+        return response;
+      })
+    )
+  }
+
+  postReview(id: number,values: any){
+    return this.http.post(this.baseUrl + 'products/reviews/'+id,values).pipe(
+      map((user: ProductReview) => {
+        console.log("review posted");
+      })
+    )
+  }
+
+
+  getProductRating(productId){
+
   }
 }

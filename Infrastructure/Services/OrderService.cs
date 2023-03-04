@@ -5,6 +5,7 @@ using Core.Entities;
 using Core.Entities.OrderAggregate;
 using Core.Interfaces;
 using Core.Specifications;
+using Infrastructure.Data;
 
 namespace Infrastructure.Services
 {
@@ -13,12 +14,22 @@ namespace Infrastructure.Services
         private readonly IBasketRepository _basketRepo;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPaymentService _paymentService;
-        public OrderService(IBasketRepository basketRepo, IUnitOfWork unitOfWork, IPaymentService paymentService)
+        private readonly StoreContext _context;
+        public OrderService(IBasketRepository basketRepo, IUnitOfWork unitOfWork, IPaymentService paymentService, StoreContext context)
         {
             _paymentService = paymentService;
             _unitOfWork = unitOfWork;
             _basketRepo = basketRepo;
-        }
+            //_context = context
+    }
+
+         public async Task<bool> CreateReview(ProductReview review){
+             _unitOfWork.Repository<ProductReview>().Add(review);
+             var result =await _unitOfWork.Complete();
+             if (result <= 0) return false;
+
+            return true;
+         }
 
         public async Task<Order> CreateOrderAsync(string buyerEmail, int delieveryMethodId, string basketId, Address shippingAddress)
         {

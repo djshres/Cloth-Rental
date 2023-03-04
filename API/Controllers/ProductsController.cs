@@ -20,17 +20,23 @@ namespace API.Controllers
         private readonly IGenericRepository<ProductBrand> _productBrandRepo;
         private readonly IGenericRepository<ProductType> _productTypeRepo;
         private readonly IGenericRepository<Product> _productsRepo;
+         private readonly IGenericRepository<ProductReview> _productsReviewRepo;
+          private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
 
         public ProductsController(IGenericRepository<Product> productsRepo,
             IGenericRepository<ProductType> productTypeRepo,
             IGenericRepository<ProductBrand> productBrandRepo,
+             IGenericRepository<ProductReview> productsReviewRepo,
+             IOrderService orderService,
             IMapper mapper)
         {
             _mapper = mapper;
             _productsRepo = productsRepo;
             _productTypeRepo = productTypeRepo;
             _productBrandRepo = productBrandRepo;
+            _productsReviewRepo=productsReviewRepo;
+             _orderService = orderService;
         }
 
         //[Cached(600)]
@@ -79,5 +85,31 @@ namespace API.Controllers
         {
             return Ok(await _productTypeRepo.ListAllAsync());
         }
+
+        [HttpGet("reviews/{id}")]
+        public async Task<ActionResult<IReadOnlyList<ProductReview>>> GetReviews(int id)
+        {
+            return Ok(await _productsReviewRepo.ListAllAsync(id));
+        }
+
+         [HttpPost("reviews/{id}")]
+        public async Task<ActionResult<ProductReviewDto>> PostReviews(int id, ProductReviewDto productReviewDto)
+        {
+            var review = new ProductReview
+            {
+                UserName = productReviewDto.Name,
+                Summary = productReviewDto.Comment,
+                Review = "",
+                ProductId = id
+            };
+
+             var response = await _orderService.CreateReview(review);
+
+            if (response == false) return BadRequest(new ApiResponse(400, "Problem posting review"));
+
+            return Ok(review);
+        }
     }
 }
+
+        

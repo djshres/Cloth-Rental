@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.Entities;
 using Core.Entities.OrderAggregate;
 
 namespace Core.Interfaces
@@ -10,5 +11,6 @@ namespace Core.Interfaces
         Task<IReadOnlyList<Order>> GetOrdersForUserAsync(string buyerEmail);
         Task<Order> GetOrderByIdAsync(int id, string buyerEmail);
         Task<IReadOnlyList<DeliveryMethod>> GetDeliveryMethodsAsync();
+        Task<bool> CreateReview(ProductReview review);
     }
 }
