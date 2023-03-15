@@ -21,28 +21,29 @@
             </div>
             <div>
               <h3 mt-4>Customer Reviews</h3>
-              <div class="reviews">
+              <div class="reviews mt-4">
                    <div *ngFor="let review of reviews" class="review">
                         <div class="review-title">
-                             <span class="summary">{{review?.summary}}</span>
                              <!-- <span class="summary">{{review?.productId}}</span> -->
                              <!-- <span class="summary">{{review?.userName}}</span> -->
                              <span class="reviewer">
                                   <i class="fa fa-user"></i>
                                   <span>{{review?.userName}}</span>
+                        <!-- <div class="text text-capitalize">{{review?.review}}</div> -->
+                        <div class="text" [style.background-color]="review?.review == 'Positive' ? 'green' : 'red'">{{review?.review}}</div>
                              </span>
+                             <span class="summary">{{review?.summary}}</span>
                         </div>
-                        <!-- <div class="text">{{review?.review}}</div> -->
                    </div>
               </div>
             </div>
 
             <div class="d-flex justify-content-center mt-5">
-              <div class="col-6">
+              <div class="col-12">
                   <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
                       <app-text-input type="hidden" formControlName="name" [label]="'Your Name'" value="'yyi'"></app-text-input>
                       <!-- <input type="hidden" formControlName="name"> -->
-                      <app-text-input formControlName="comment" [label]="'Comment'"></app-text-input>
+                      <app-text-input formControlName="comment" class="comment" [label]="'Comment'"></app-text-input>
                       <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                   </form>
               </div>

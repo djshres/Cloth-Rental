@@ -12,6 +12,10 @@ using AutoMapper;
 using API.Errors;
 using Microsoft.AspNetCore.Http;
 using API.Helpers;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace API.Controllers
 {
@@ -103,11 +107,48 @@ namespace API.Controllers
                 ProductId = id
             };
 
-             var response = await _orderService.CreateReview(review);
+            var predictionResponse = await GetPrediction(review.Summary);
+            //review.Review = predictionResponse.Prediction;
+            var rating =int.Parse(predictionResponse.Prediction);
+            if (rating >= 3)
+            {
+                review.Review = "Positive";
+            }
+            else
+            {
+                review.Review = "Negative";
+            }
+
+            var response = await _orderService.CreateReview(review);
 
             if (response == false) return BadRequest(new ApiResponse(400, "Problem posting review"));
+            //review.Review = "Positive";//api call here from the model //input is just a summary i.e. comment
 
             return Ok(review);
+        }
+
+        public class PredictionResponse
+        {
+            public string Prediction { get; set; }
+            public string Text { get; set; }
+        }
+
+        // Define a function to make the API request
+        public async Task<PredictionResponse> GetPrediction(string reviewText)
+        {
+            // Define the request body
+            var requestBody = new StringContent(JsonConvert.SerializeObject(new { text = reviewText }));
+            requestBody.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            // Create the HTTP client and send the request
+            using var httpClient = new HttpClient();
+            var response = await httpClient.PostAsync("http://127.0.0.1:6060/predict", requestBody);
+
+            // Read the response content and deserialize it into a PredictionResponse object
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var predictionResponse = JsonConvert.DeserializeObject<PredictionResponse>(responseContent);
+
+            return predictionResponse;
         }
     }
 }

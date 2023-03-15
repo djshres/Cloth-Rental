@@ -1,6 +1,6 @@
 <div class="form-label-group">
-    <input 
-        [ngClass]="(controlDir?.control?.touched) 
+    <input
+        [ngClass]="(controlDir?.control?.touched)
             ? !controlDir.control.valid ? 'is-invalid' : 'is-valid' : null"
         [type]="type"
         (input)="onChange($event.target.value)"
@@ -13,8 +13,8 @@
     <label for="{{label}}">{{label}}</label>
     <div class="invalid-feedback" *ngIf="(!controlDir?.control?.valid && controlDir?.control?.touched)">
         <span *ngIf="controlDir.control.errors?.required">{{label}} is required</span>
-        <span *ngIf="controlDir.control.errors?.pattern">Invalid email address</span>
-        
+        <span *ngIf="controlDir.control.errors?.pattern">Invalid </span>
+
     </div>
 
     <div class="invalid-feedback d-block" *ngIf="(!controlDir?.control?.valid && controlDir?.control?.dirty)" >

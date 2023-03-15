@@ -1,0 +1,29 @@
+.review-title{
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewer{
+  display: flex;
+  gap: 5px;
+}
+.reviewer span{
+  font-weight: bolder;
+  font-size: 20px;
+}
+.text{
+  background-color: rgb(206, 91, 70);
+  color: white;
+  padding: 5px;
+  font-size: small;
+}
+.reviewer i{
+  background-color: #ffffff;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+// form app-text-input{
+//   display: flex;
+//   align-items: flex-start;
+// }
